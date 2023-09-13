@@ -1,0 +1,74 @@
+﻿@model Blogging.Web.Models.ViewModels.HomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <h1 class="display-5 fw-bold mb-4">Blogger &mdash; The Dev Blogs</h1>
+                <p class="lead">
+                    Blogger is the home to coding blogs covering a vast range of topics like
+                    HTML, CSS, Javascript, Asp.Net, C#, Angular, Laravel, PHP, Python, Django etc.
+                    Want to read the latest dev articles? Join the Blogger app and get the weekly latest blogs in your email.
+                </p>
+                <p class="lead">
+                    Blogger is the home to coding blogs covering a vast range of topics like
+                    HTML, CSS, Javascript, Asp.Net, C#, Angular, Laravel, PHP, Python, Django etc.
+                    Want to read the latest dev articles? Join the Blogger app and get the weekly latest blogs in your email.
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <img src="https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg" class="img-fluid rounded" alt="hero image" />
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                @if (Model != null && Model.BlogPosts.Any())
+                {
+                    foreach (var blogPost in Model.BlogPosts)
+                    {
+                        <div class="mb-5 bg-light box-shadow d-flex rounded">
+                            <img src="@blogPost.FeaturedImageUrl" class="img-fluid rounded" alt="featured image" style="width:30%" />
+                            <div class="py-2 px-3">
+                                <h5 class="mb-3 text-capitalize">@blogPost.Heading</h5>
+                                <p>@blogPost.ShortDescription <a class="text-primary" 
+                                    asp-area="" 
+                                    asp-controller="Blogs" 
+                                    asp-action="Index"
+                                    asp-route-urlHandle="@blogPost.UrlHandle">Read More</a></p>
+                                <div class="my-2">
+                                @foreach(var tag in blogPost.Tags)
+                                {
+                                    <span class="badge badge-pill bg-secondary">@tag.Name</span>
+                                }
+                                </div>
+                                <div class="d-flex">
+                                    <p class="mb-0 text-muted"><i class="fa fa-user"></i> @blogPost.Author</p>
+                                    <p class="mb-0 ms-3 text-muted"><i class="fa fa-calendar-alt"></i> @blogPost.PublishedDate.ToShortDateString()</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                }
+            </div>
+            <div class="col-md-3">
+                <div>
+                    @if(Model != null && Model.Tags.Any())
+                    {
+                        foreach(var tag in Model.Tags)
+                        {
+                            <span class="badge badge-pill bg-dark mx-1 my-1">@tag.Name</span>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
